@@ -1,2 +1,2 @@
 # Bouncy
-A simple Physics simulator written in Python.
+A simple single-particle collision simulator written in Python.
