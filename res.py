@@ -1,14 +1,17 @@
 """Module containing all materials"""
+import pygame
 
 
 class Ball:
+
+
     # Initial definition
-    def __init__(self, canvas, **kwargs):
-        self.canvas = canvas
+    def __init__(self, surface, **kwargs):
+        self.surface = surface
         self.radius = kwargs.get('radius')
         self.pos_x = kwargs.get('pos_x')
         self.pos_y = kwargs.get('pos_y')
-        self.colour = kwargs.get('colour', 'red')
+        self.colour = kwargs.get('colour', (255, 0, 0))
         self.mass = kwargs.get('mass')
         self.type = 'object'
 
@@ -16,17 +19,15 @@ class Ball:
 
     # Creates the ball
     def create(self):
-        self.ball = self.canvas.create_oval(self.pos_x, self.pos_y, self.pos_x + self.radius * 2, self.pos_y + self.radius * 2)
-        self.canvas.itemconfig(self.ball, fill=self.colour)
+        self.ball = pygame.draw.circle(self.surface, self.colour, (self.pos_x, self.pos_y), self.radius)
 
     # Moves the ball
     def move(self, x, y):
-        self.canvas.delete(self.ball)
-
         self.pos_x = x
         self.pos_y = y
-
+        self.surface.fill((255, 255, 255))
         self.create()
+        pygame.display.update()
 
     # Returns the ball's coordinates
     def pos(self):
@@ -37,8 +38,8 @@ class Ball:
 
 class Container:
     # Initial definition
-    def __init__(self, canvas, **kwargs):
-        self.canvas = canvas
+    def __init__(self, surface, **kwargs):
+        self.surface = surface
         self.width = kwargs.get('width')
         self.height = kwargs.get('height')
         self.pos_x = kwargs.get('pos_x')
