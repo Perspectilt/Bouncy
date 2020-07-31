@@ -35,7 +35,7 @@ class Ball:
 
 
 class Container:
-    # Initial definition
+    # Initial definitions
     def __init__(self, surface, **kwargs):
         self.surface = surface
         self.width = kwargs.get('width')
