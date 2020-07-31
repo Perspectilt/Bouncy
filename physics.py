@@ -12,18 +12,18 @@ def addforce(object, name, magnitude, direction):
 
     # Check if same force vector exists
     for i in object.forces:
-        if i['name'] == name.lower():
+        if i['name'] == name:
             c = False
             break
 
     if c and magnitude:
-        object.forces += [{'name': name.lower(), 'magnitude': math.fabs(float(magnitude)), 'direction': float(direction)}]
+        object.forces += [{'name': name, 'magnitude': math.fabs(float(magnitude)), 'direction': float(direction)}]
 
 
 # Removes force by name from an object
 def removeforce(object, name):
     for i in object.forces:
-        if i['name'] == name.lower():       # Checks if same force vector exists
+        if i['name'] == name:       # Checks if same force vector exists
             object.forces.remove(i)
 
 
