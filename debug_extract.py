@@ -19,7 +19,7 @@ def add(dictionary, item):
     if item[0] not in dictionary.keys():
         dictionary[item[0]] = item[1]
 
-# Convert ONLY numbers in string to a numeric value (ignores null string)
+# Convert ONLY numbers in string to a numeric value (ignores null strings)
 def num(string):
     a = ''
     for i in string:
