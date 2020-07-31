@@ -3,9 +3,7 @@ import pygame
 
 
 class Ball:
-
-
-    # Initial definition
+    # Initial definitions
     def __init__(self, surface, **kwargs):
         self.surface = surface
         self.radius = kwargs.get('radius')
