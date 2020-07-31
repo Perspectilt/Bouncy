@@ -52,5 +52,3 @@ class Container:
         y2 = self.pos_y + self.height
 
         return x1, y1, x2, y2
-
-objects, boundaries = [], []
