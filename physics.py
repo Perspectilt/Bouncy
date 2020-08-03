@@ -95,7 +95,7 @@ def physics(object, boundary, time_factor=1, log=False, limit=False):
             f.write('\ts_x: ' + str(s_x) + '\ts_y: ' + str(s_y) + '\n')
             f.write('\tv_x: ' + str(v_x) + '\tv_y: ' + str(v_y) + '\n')
 
-    # Gets rid of instantaneous forces
+    # Gets rid of impulsive forces
     if t == .01 * time_factor or t == .02 * time_factor:
         removeforce(object[0], 'f_x')
         removeforce(object[0], 'f_y')
