@@ -3,7 +3,9 @@ import pygame
 
 
 class Ball:
-    # Initial definitions
+
+
+    # Initial definition
     def __init__(self, surface, **kwargs):
         self.surface = surface
         self.radius = kwargs.get('radius')
@@ -35,7 +37,7 @@ class Ball:
 
 
 class Container:
-    # Initial definitions
+    # Initial definition
     def __init__(self, surface, **kwargs):
         self.surface = surface
         self.width = kwargs.get('width')
@@ -52,3 +54,5 @@ class Container:
         y2 = self.pos_y + self.height
 
         return x1, y1, x2, y2
+
+objects, boundaries = [], []
