@@ -6,8 +6,9 @@ import time
 import pygame
 
 
-# Adds force (vector) to an object
+
 def addforce(object, name, magnitude, direction):
+    """ Adds force (vector) to an object """
     c = True
 
     # Check if same force vector exists
@@ -20,15 +21,16 @@ def addforce(object, name, magnitude, direction):
         object.forces += [{'name': name.lower(), 'magnitude': math.fabs(float(magnitude)), 'direction': float(direction)}]
 
 
-# Removes force by name from an object
 def removeforce(object, name):
+    """ Removes force by name from an object """
     for i in object.forces:
         if i['name'] == name.lower():       # Checks if same force vector exists
             object.forces.remove(i)
 
 
-# Applies gravity to all objects
+
 def apply_gravity(objects, p_factor=1):
+    """ Applies gravity to all objects """
     for i in objects:
         addforce(i, 'gravity', p_factor * 9.8, -90)
 
@@ -38,8 +40,8 @@ def apply_gravity(objects, p_factor=1):
 T, t, xvector, yvector, u_x, u_y, n, s0x, s0y, condition, s_x, s_y = 0, 0, 0, 0, 0, 0, 1, 0, 0, True, 0, 0
 
 
-# To add the laws of physics (very basic stuff for now -- limited to 1 object and 1 boundary only)
 def physics(object, boundary, time_factor=1, log=False, limit=False):
+    """ To add the laws of physics (very basic stuff for now -- limited to 1 object and 1 boundary only) """
     global t
     global xvector
     global yvector
