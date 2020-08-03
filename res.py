@@ -3,8 +3,6 @@ import pygame
 
 
 class Ball:
-
-
     # Initial definition
     def __init__(self, surface, **kwargs):
         self.surface = surface
