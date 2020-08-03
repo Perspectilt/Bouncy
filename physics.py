@@ -12,25 +12,25 @@ def addforce(object, name, magnitude, direction):
 
     # Check if same force vector exists
     for i in object.forces:
-        if i['name'] == name:
+        if i['name'] == name.lower():
             c = False
             break
 
     if c and magnitude:
-        object.forces += [{'name': name, 'magnitude': math.fabs(float(magnitude)), 'direction': float(direction)}]
+        object.forces += [{'name': name.lower(), 'magnitude': math.fabs(float(magnitude)), 'direction': float(direction)}]
 
 
 # Removes force by name from an object
 def removeforce(object, name):
     for i in object.forces:
-        if i['name'] == name:       # Checks if same force vector exists
+        if i['name'] == name.lower():       # Checks if same force vector exists
             object.forces.remove(i)
 
 
 # Applies gravity to all objects
-def apply_gravity(objects):
+def apply_gravity(objects, p_factor=1):
     for i in objects:
-        addforce(i, 'gravity', 9.8, -90)
+        addforce(i, 'gravity', p_factor * 9.8, -90)
 
 
 # Main physics handle:-
@@ -52,8 +52,6 @@ def physics(object, boundary, time_factor=1, log=False, limit=False):
     global condition
     global s_x
     global s_y
-    
-    p_factor = 1      # Conversion factor for metre per pixel
 
     time_factor = (int(time_factor), 1)[not int(time_factor)]
 
@@ -89,10 +87,7 @@ def physics(object, boundary, time_factor=1, log=False, limit=False):
 
     # Calculations for x, y positions and velocities at current time 't' (rounded, as coordinates are pixels)
     v_x, v_y = round(u_x + xvector/object[0].mass * t), round(u_y + yvector/object[0].mass * t)
-    if condition:
-        s_x, s_y = s0x - round((v_x - u_x) * t), s0y - round((v_y - u_y))
-    else:
-        condition = True
+    s_x, s_y = s0x - round((v_x - u_x) * t), s0y - round((v_y - u_y) * t)
 
     # Logging
     if log:
@@ -101,7 +96,7 @@ def physics(object, boundary, time_factor=1, log=False, limit=False):
             f.write('\tv_x: ' + str(v_x) + '\tv_y: ' + str(v_y) + '\n')
 
     # Gets rid of instantaneous forces
-    if t == 1 + .01 * time_factor or t == 1 + .02 * time_factor:
+    if t == .01 * time_factor or t == .02 * time_factor:
         removeforce(object[0], 'f_x')
         removeforce(object[0], 'f_y')
 
@@ -124,17 +119,13 @@ def physics(object, boundary, time_factor=1, log=False, limit=False):
 
     # Collision physics (assumes completely elastic collision)  <!!!Fine-tuning needed!!!>
     if (v_x > 0 and object[0].pos()[0] <= boundary[0].pos()[0]) or (v_x < 0 and object[0].pos()[2] >= boundary[0].pos()[2]):
-        addforce(object[0], 'f_x', 2 * object[0].mass * u_x * p_factor/(round(t), 1)[round(t) == 0] + xvector, -math.copysign(1, object[0].mass * u_x/(round(t), 1)[round(t) == 0]) * 90)
-        t = 1
-        s0x, s0y = object[0].pos()[0], object[0].pos()[1]
-        v_x, v_y = 0, 0
-        condition = False       # condition for skipping position calculation while impulsive force exists
+        addforce(object[0], 'f_x', 2 * object[0].mass * u_x + xvector, -math.copysign(1, object[0].mass * u_x) * 90)
+        t = 0
+        u_x = 0
     if (v_y > 0 and (object[0].pos()[1] <= boundary[0].pos()[1])) or (v_y < 0 and (object[0].pos()[3] >= boundary[0].pos()[3])):
-        addforce(object[0], 'f_y', 2 * object[0].mass * u_y * p_factor/(round(t), 1)[round(t) == 0] + yvector, -math.copysign(1, object[0].mass * u_y/(round(t), 1)[round(t) == 0]) * 90)
-        t = 1
-        s0x, s0y = object[0].pos()[0], object[0].pos()[1]
-        v_x, v_y = 0, 0
-        condition = False       # condition for skipping position calculation while impulsive force exists
+        addforce(object[0], 'f_y', 2 * object[0].mass * u_y/(round(t), 1)[round(t) == 0] + yvector, -math.copysign(1, object[0].mass * u_y/(round(t), 1)[round(t) == 0]) * 90)
+        t = 0
+        u_y = 0
 
     t += .01 * time_factor   # Time counter (to be replaced in next version?)
     T += .01 * time_factor   # Master time-keeper
