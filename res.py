@@ -4,6 +4,7 @@ import pygame
 
 class Ball:
 """ Class used to create a ball object """
+
     def __init__(self, surface, **kwargs):
         """ Initial definition """
         self.surface = surface
@@ -40,6 +41,7 @@ class Ball:
 
 class Container:
 """ Class used to create a container object """
+
     def __init__(self, surface, **kwargs):
         """ Initial definition """
         self.surface = surface
