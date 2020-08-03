@@ -17,7 +17,7 @@ objects = [ball_1]
 boundaries = [container_1]
 
 # Applying gravity to all objects
-physics.apply_gravity(objects)
+physics.apply_gravity(objects, 50)
 
 running = True      # variable to store state of the loop
 
@@ -30,6 +30,6 @@ while running:
             pygame.quit()
 
     # Runs the game physics
-    physics.physics(objects, boundaries)            # Use log=True for debug output |   Use limit=<no. of seconds> to limit the program to a certain amount of time
+    physics.physics(objects, boundaries, log=True)            # Use log=True for debug output |   Use limit=<no. of seconds> to limit the program to a certain amount of time
     
 # Try to use the limit parameter every time if you intend to use the debug_extract.py
