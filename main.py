@@ -32,4 +32,4 @@ while running:
     # Runs the game physics
     physics.physics(objects, boundaries)            # Use log=True for debug output   |   Use limit=<no. of seconds> to limit the program to a certain amount of time
     
-# Try to use the limit parameter every time if you intend to use the debug_extract.py
+# Try to use the limit argument every time if you intend to use the debug_extract.py
