@@ -58,15 +58,15 @@ def physics(object, boundary, time_factor=1, log=False, limit=False):
     time_factor = (int(time_factor), 1)[not int(time_factor)]
 
     # Records original position for reference
-    if t == 0:
+    if not t:
         s0x, s0y = object[0].pos()[0], object[0].pos()[1]
 
     # File handling for first run
     if log:
         if os.path.exists('debug.log'):
             if n == 1:
-                f = open('debug.log', 'w')
-                f.close()
+                with open('debug.log', 'w'):
+                    pass
 
     # Logging
     if log:
@@ -121,10 +121,10 @@ def physics(object, boundary, time_factor=1, log=False, limit=False):
 
     # Collision physics (assumes completely elastic collision)  <!!!Fine-tuning needed!!!>
     if (v_x > 0 and object[0].pos()[0] <= boundary[0].pos()[0]) or (v_x < 0 and object[0].pos()[2] >= boundary[0].pos()[2]):
-        addforce(object[0], 'f_x', 2 * object[0].mass * u_x + xvector, -math.copysign(1, object[0].mass * u_x) * 90)
+        addforce(object[0], 'f_x', 2 * object[0].mass * u_x/(round(t), 1)[round(t) == 0] + xvector, -math.copysign(1, object[0].mass * u_x/(round(t), 1)[round(t) == 0]) * 90)
         t = 0
         u_x = 0
-    if (v_y > 0 and (object[0].pos()[1] <= boundary[0].pos()[1])) or (v_y < 0 and (object[0].pos()[3] >= boundary[0].pos()[3])):
+    if (v_y > 0 and object[0].pos()[1] <= boundary[0].pos()[1]) or (v_y < 0 and object[0].pos()[3] >= boundary[0].pos()[3]):
         addforce(object[0], 'f_y', 2 * object[0].mass * u_y/(round(t), 1)[round(t) == 0] + yvector, -math.copysign(1, object[0].mass * u_y/(round(t), 1)[round(t) == 0]) * 90)
         t = 0
         u_y = 0
